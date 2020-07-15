@@ -38,8 +38,24 @@ class Course {
 
     static setAll(courses) {
         return new Promise((resolve, reject) => {
-            fs.writeFile(path.join(__dirname, '..', 'data', 'courses.json'), JSON.stringify(courses), (err) => {if(err) reject(err); resolve()})
+            fs.writeFile(path.join(__dirname, '..', 'data', 'courses.json'), JSON.stringify(courses), (err) => {
+                if (err) reject(err);
+                resolve()
+            })
         })
+    }
+
+    static async getById(id) {
+        const courses = await Course.getAll();
+        return courses.find(el => el.id === id);
+    }
+
+    static async update(course) {
+        const courses = await Course.getAll();
+        const index = courses.findIndex(el=> el.id === course.id);
+        courses[index] = course;
+        console.log(courses);
+        await Course.setAll(courses);
     }
 }
 
