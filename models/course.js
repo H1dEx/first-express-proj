@@ -47,14 +47,13 @@ class Course {
 
     static async getById(id) {
         const courses = await Course.getAll();
-        return courses.find(el => el.id === id);
+        return (courses.find(el => el.id === id));
     }
 
     static async update(course) {
         const courses = await Course.getAll();
         const index = courses.findIndex(el=> el.id === course.id);
         courses[index] = course;
-        console.log(courses);
         await Course.setAll(courses);
     }
 }
